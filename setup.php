@@ -17,11 +17,11 @@ public final function getSetUpOperation() {
     // run the default setUp() method first
     parent::setUp();
     $password = "abc123";
-    $this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
+    $this->VALID_PROFILE_SALT = bin2hex(random_bytes(16));
     $this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
 
 
-    // create and insert a Profile to own the test Tweet
+    // create and insert a Profile to own the test Article
     $this->profile = new Profile (generateUuidV4(), null,"name", "test@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212", $this->VALID_PROFILE_SALT);
     $this->profile->insert($this->getPDO());
 
@@ -35,7 +35,4 @@ public final function getSetUpOperation() {
     //format the sunset date to use for testing
     $this->VALID_SUNSETDATE = new\DateTime();
     $this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
-
-
-
 }
